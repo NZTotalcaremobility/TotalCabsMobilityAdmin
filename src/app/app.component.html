@@ -1,0 +1,21 @@
+<div id="main-wrapper">
+    <div class="preloader" *ngIf="preloaderToggle()">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- header -->
+    <app-header *ngIf="!freeRoutes.includes(currentUrl)" [currentuser]='currentuser' [role]='role'
+        [permissionList]="permissionList"></app-header>
+    <!-- sidebar -->
+    <app-sidebar *ngIf="!freeRoutes.includes(currentUrl)" [currentuser]='currentuser' [role]='role'
+        [permissionList]="permissionList"></app-sidebar>
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div *ngIf="freeRoutes.includes(currentUrl)" [ngStyle]="{ 'mini-height': miniHeight }">
+        <router-outlet></router-outlet>
+    </div>
+    <div *ngIf="!freeRoutes.includes(currentUrl)" class="page-wrapper" [ngStyle]="{ 'mini-height': miniHeight }">
+        <router-outlet></router-outlet>
+    </div>
+</div>

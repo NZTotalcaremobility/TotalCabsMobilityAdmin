@@ -1,0 +1,220 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Edit Cover Job</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item active">Dispatch</li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 align-self-center">
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link"data-toggle="tab" [routerLink]="['/jobs']" role="tab">
+                        Dispatch Job
+                    </a> 
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/cover']"  role="tab">
+                        Cover Job
+                    </a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/addDispatch']" role="tab">
+                        Add Dispatch Job
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/addCover']" role="tab">
+                        Add Cover Job
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="javascript:;" role="tab">
+                        Edit Cover Job
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-12 align-self-center">
+
+<div class="card wizard-content">
+    <div class="card-body tab-wizard vertical wizard-circle wizard clearfix form-material">
+        <form [formGroup]="userForm">
+            <div class="row">
+                <div class="col-md-6">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>User </label>
+                        <div class="input-group">
+                            <input type="text " *ngIf="!isOver" class="form-control border-0"
+                                placeholder="Enter Name or Pin" formControlName="name"
+                                (keyup)="handleSearch()" />
+                            <div class="input-group-append">
+                                <div class="input-group-text border-0 bg-transparent"><button
+                                        (click)="onHandleSelect('new',{})"
+                                        class="btn btn-outline-success btn-sm">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="isAutoCompleteShown" class="list-group autocomplteList">
+                            <a *ngFor="let item of searchResult" (click)="onHandleSelect('click',item)"
+                                href="javascript:void(0)" class="list-group-item list-group-item-action">
+                                <img src="{{ imagePath }}{{ item.imagefile || 'profile-pic.jpg' }}" alt=""
+                                    class="profile-pic" />{{ item?.name }} -
+                                {{ item?.phonenumber }}</a>
+                        </div>
+                        <span class="text-danger" *ngIf="userForm.controls['name'].hasError('required') && (userForm.controls['name'].dirty || userForm.controls['name'].touched)">
+                            This field is required
+                        </span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email">User Email</label>
+                                <input type="text" class="form-control" formControlName="email">
+                                <span class="text-danger"
+                                    *ngIf="userForm.controls['email'].hasError('pattern') && (userForm.controls['email'].dirty || userForm.controls['email'].touched)">Please
+                                    enter valid email address</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phonenumber">Phone Number</label>
+                                <input type="tel" class="form-control" formControlName="phonenumber">
+                                <span class="text-danger"
+                                    *ngIf="userForm.controls['phonenumber'].hasError('pattern')">This
+                                    field is required 10 digits</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Vehicle </label>
+                        <select class="form-control custom-select" formControlName="driverdetails" id="driverdetails"  #mySelect
+                            (change)='onOptionsSelected(mySelect.value)'>
+                            <option value="">--Select Vehicle--</option>
+                            <option value="Wheelchair Van">Wheelchair Van</option>
+                            <option value="9 Seater Van">9 Seater Van</option>
+                            <option value="Mini">Car</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dateOfJourney">Date Of Journey</label>
+                        <input placeholder="YYYY-MM-DD" type="text" class="form-control" [minDate]="minDate"
+                            formControlName="dateOfJourney" #dp="bsDatepicker" bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['dateOfJourney'].hasError('required') && (userForm.controls['dateOfJourney'].dirty || userForm.controls['dateOfJourney'].touched)">This
+                            field is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="timeOfJourney">Time Of Journey</label>
+                        <input type="time" value="09:00" class="form-control"
+                            formControlName="timeOfJourney">
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['timeOfJourney'].hasError('required') && (userForm.controls['timeOfJourney'].dirty || userForm.controls['timeOfJourney'].touched)">This
+                            field is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Pickup Location </label>
+                        <input type="text" class="form-control" id="pickuploc"
+                            formControlName="pickUpLocation" placeholder="Enter pickup location"
+                            class="form-control" (keydown.enter)="$event.preventDefault()" autocorrect="off"
+                            autocapitalize="off" spellcheck="off" #Pickuplocation>
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['pickUpLocation'].hasError('required') && (userForm.controls['pickUpLocation'].dirty || userForm.controls['pickUpLocation'].touched)">This
+                            field is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Drop Location </label>
+                        <input type="text" class="form-control" id="droploc"
+                            formControlName="dropUpLocation" placeholder="Enter drop location"
+                            class="form-control" (keydown.enter)="$event.preventDefault()" autocorrect="off"
+                            autocapitalize="off" spellcheck="off" #DropLocation>
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['dropUpLocation'].hasError('required') && (userForm.controls['dropUpLocation'].dirty || userForm.controls['dropUpLocation'].touched)">This
+                            field is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Price ($)</label>
+                        <input type="text" class="form-control" formControlName="price">
+
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['price'].hasError('required') && (userForm.controls['price'].dirty || userForm.controls['price'].touched)">This
+                            field is required</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-group selected_location">
+                        <li class="list-group-item" *ngFor="let item of firstdis">{{item.loc}} <button
+                                type="button" (click)="rm(item)" class="btn btn-outline-danger btn-sm"><i
+                                    class="fa fa-minus"></i></button></li>
+                    </ul>
+                    <h2>{{td}} Km</h2>
+                </div>
+                <div class="col-md-6">
+                    <label>Job details send by</label>
+                    <div class="form-group">
+                        <select class="form-control custom-select" formControlName="mailby" id="mailby">
+                            <option value="">No notification</option>
+                            <option value="Email">Email</option>
+                            <option value="Phone">Phone</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="actions clearfix px-0 text-right">
+                <button class="btn waves-effect waves-light btn-outline-primary" [disabled]="isDisabled"
+                    (click)="onHnadleSubmit()">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div [style.display]="delModal ? 'block' : 'none'" class="modal" id="myModal">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#00a19a; color: #fff;">
+                <h4 class="modal-title">Please confirm..</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="dmhide()">&times;</button>
+            </div>
+            <div class="modal-body">
+                Do You want return booking
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="decline()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="accept()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>

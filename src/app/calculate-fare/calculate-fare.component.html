@@ -1,0 +1,99 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Calulate Fare</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{webbaseURL}}">Home</a></li>
+            <li class="breadcrumb-item active">Calculate Fare</li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <!-- <agm-map [latitude]="lat" [longitude]="lng">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        </agm-map> -->
+
+                    <!-- <agm-map [latitude]="latitude" [longitude]="longitude">
+                        <agm-direction [renderOptions]="renderOptions" [markerOptions]="markerOptions" [origin]="start"
+                            [destination]="end">
+                        </agm-direction>
+                    </agm-map> -->
+                    <iframe width="100%" height="500" id="gmap_canvas"
+                        src="https://maps.google.com/maps?q=Christchurch&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-5">
+            <div class="card card-default">
+
+                <div class="card-header">
+                    <h4 class="mb-0">Fare Calculator</h4>
+                </div>
+                <div class="card-body clearfix form-material">
+                    <form [formGroup]="fairForm">
+                        <div class="form-group">
+                            <label>Pick up</label>
+                            <!-- <input type="text" class="form-control" placeholder="-- " /> -->
+                            <input type="text" class="form-control" formControlName="pickUpLocation"
+                                placeholder="Enter Pickup" class="form-control"
+                                (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
+                                spellcheck="off" #Pickuplocation>
+                            <span class="text-danger"
+                                *ngIf="fairForm.controls['pickUpLocation'].hasError('required') && (fairForm.controls['pickUpLocation'].dirty || fairForm.controls['pickUpLocation'].touched)">This
+                                field is required</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Drop off</label>
+                            <!-- <input type="text" class="form-control" placeholder="--" /> -->
+                            <input type="text" class="form-control" formControlName="dropUpLocation"
+                                placeholder="Enter Drop off " class="form-control"
+                                (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
+                                spellcheck="off" #DropLocation>
+                            <span class="text-danger"
+                                *ngIf="fairForm.controls['dropUpLocation'].hasError('required') && (fairForm.controls['dropUpLocation'].dirty || fairForm.controls['dropUpLocation'].touched)">This
+                                field is required</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select vehicle</label>
+                            <!-- <select class="form-control">
+        <option>Select vehicle</option>
+        <option value="car">Car</option>
+        <option value="van">Van</option>
+        </select> -->
+                            <select class="form-control custom-select" formControlName="carType"
+                                (change)='onOptionsSelected($event)' id="carType">
+                                <option value="">-Select vehicle-</option>
+                                <option value="car">Car</option>
+                                <option value="van">Van</option>
+                            </select>
+                            <span class="text-danger"
+                                *ngIf="fairForm.controls['carType'].hasError('required') && (fairForm.controls['carType'].dirty || fairForm.controls['carType'].touched)">This
+                                field is required</span>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-primary" (click)="submitForm()">Calculate Now</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center" *ngIf="show==true">
+                        <button class="btn btn-primary"><a href='{{webbaseURL}}user/search'>Book A
+                                job</a></button>
+                    </div>
+                    <div class="card-header ">
+                        <label>Distance : {{ kilometerdistance}} KM </label><br>
+                        <label>Duration : {{ duration}} </label><br>
+                        <label *ngIf="selected == 'car' ">Car : {{ mini}} </label>
+                        <label *ngIf="selected == 'van' ">Van : {{ Wheelchair}} </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

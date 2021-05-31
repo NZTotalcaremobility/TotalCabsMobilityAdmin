@@ -1,0 +1,19 @@
+.profile-pic{
+    width: 18px;
+}
+.border-0 {
+    border: 0px !important;
+}
+
+.border-0:focus {
+    box-shadow: none;
+}
+.autocomplteList {
+    max-height: 300px;
+    overflow-y: scroll;
+    border-radius: 0px;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    padding-right: 30px;
+}

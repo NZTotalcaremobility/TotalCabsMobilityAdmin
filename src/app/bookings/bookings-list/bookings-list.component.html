@@ -1,0 +1,141 @@
+<div class="card">
+    <div class="card-default">
+        <div class="card-header">
+            <h4 class="card-title mb-0">All bookings</h4>
+        </div>
+        <div class="form-group col-md-4">
+            <input type="text" class="form-control"  placeholder="Enter Keyword for filter result" [(ngModel)]="searchedKeyword">
+          </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover no-wrap contact-list" data-page-size="10">
+                            <thead>
+                                <tr>
+                                    
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 8%;">Id
+                                        </th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 8%;">Date
+                                        </th>
+                                        <!-- <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 15%;">Day
+                                            (Recursive Booking)</th> -->
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 8%;">Pickup
+                                            Time</th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 7%;">User
+                                        </th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2" style="width: 14%;">Picked
+                                            From </th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2" style="width: 14%;">
+                                            Intermediate </th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2" style="width: 14%;">
+                                            Dropped At</th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 7%;">
+                                            Distance</th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4" style="width: 5%;">Fare
+                                        </th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4" style="width: 5%;">Status
+                                        </th>
+                                        <!-- <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4" style="width: 5%;">Edit
+                                        </th> -->
+                                        <th style="width: 6%;">Action</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of bookingsList | filter:searchedKeyword  paginate: { itemsPerPage: 10, currentPage: page }">
+                                    <td>{{item?.jobid?.jobid}}</td>
+                                    <td>{{item?.jobid?.dateOfJourney  | date:'yyyy-MM-dd'}}</td>
+                                    <td>{{item?.jobid?.pickUptime}}</td>
+                                    <td>
+                                        <a [routerLink]="" (click)="getUID(item.user._id)">
+                                            <img src="{{imageURL+item?.user?.imagefile}}" alt="" class="img-circle" />
+                                            {{item?.user?.name}}
+                                        </a>
+                                    </td>
+                                    
+                                    <td>{{item?.jobid?.pickupLocation?item?.jobid.pickupLocation.address:''}} </td>
+                                    <td data-title="Intermediate From">
+                                        <div *ngFor="let cab of item?.jobid?.midlocation">
+                                            {{cab?.location }}
+                                        </div>
+                                    </td>
+                                       <td> {{item?.jobid?.dropLocation?item?.jobid.dropLocation.address:''}}</td>
+                                       <td>{{item?.jobid?.distance}}</td>
+                                       <td>{{item?.jobid?.fare}}</td>
+                                    <td [ngSwitch]="item?.jobid?.tripstatus">
+                                        <span *ngSwitchCase="'Accepted'"
+                                            class="label label-primary">{{item?.jobid?.tripstatus}}</span>
+                                        <span *ngSwitchCase="'Canceled'"
+                                            class="label label-danger">{{item?.jobid?.tripstatus}}</span>
+                                        <span *ngSwitchCase="'Completed'"
+                                            class="label label-success">{{item?.jobid?.tripstatus}}</span>
+                                        <span *ngSwitchCase="'Complete'"
+                                            class="label label-success">{{item?.jobid?.tripstatus}}</span>
+                                        <span *ngSwitchCase="'Upcoming'"
+                                            class="label label-info">{{item?.jobid?.tripstatus}}</span>
+                                        <span *ngSwitchDefault
+                                            class="label label-inverse">{{item?.jobid?.tripstatus}}</span>
+                                    </td>
+                                    
+                                    <td>
+                                        <!-- <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline"
+                                            (click)="openModal(template)">
+                                            <i data-toggle="tooltip" title="Assign Cab" class="fa fa-cab"></i>
+                                        </button> -->
+                                        <button [routerLink]="['/bookings',item?._id]" *ngIf="
+                                            item?.jobid?.tripstatus==='Completed'" title=" genrate Invoice"
+                                            type="button" class="btn btn-sm btn-icon btn-pure btn-primary "
+                                            data-toggle="tooltip" data-original-title="Generate Invoice">
+                                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12 text-right">
+                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div [style.display]="profileModal ? 'block' : 'none'" class="modal" id="profileModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">User Details</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-material">
+                    <div class="form-group">
+                        <label><small>Name</small></label>
+                        <div class="form-control d-block"><strong>{{name}}</strong></div>
+
+                    </div>
+                    <div class="form-group">
+                        <label><small>Email</small></label>
+                        <div class="form-control d-block"><strong>{{email}}</strong></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number </label>
+                        <div class="form-control d-block"><strong>{{phonenumber}}</strong></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info" data-dismiss="modal"
+                    (click)="close()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

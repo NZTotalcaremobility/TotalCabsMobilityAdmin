@@ -1,0 +1,138 @@
+<div class="container-fluid  relative h-100">
+    <!-- .row -->
+    <div class="form-group col-md-4">
+        <input type="text" class="form-control"  placeholder="Enter Keyword for filter result" [(ngModel)]="searchedKeyword">
+      </div>
+
+    <div style="position: relative" *ngIf="!isDataLoaded">
+        <div class="row">
+            <img src="./../../../assets/images/loader_green.gif" style="margin: 0 auto;">
+        </div>
+    </div>
+    <div style="position: relative" *ngIf="isDataLoaded">
+        
+        <div class="row">
+            <!-- .col -->
+            <div class="col-md-6 col-lg-6 col-xlg-4"
+                *ngFor="let dr of guests  | filter:searchedKeyword ">
+                <div class="card card-body">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-3 text-center">
+                            <a [routerLink]="['/drivers/details']"><img src="{{image_url}}{{dr.imagefile}}"
+                                    onerror="this.src = '../assets/images/profile-pic.jpg'"
+                                    class="img-circle img-responsive"></a>
+                            <div class="mt-3 text-center btn-group w-100">
+                                <a class="btn btn-info btn-sm" (click)="veiwDriver(dr._id)"
+                                    routerLinkActive="router-link-active" title="View Details">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <button type="button" (click)="getId(dr._id)" class="btn-sm btn btn-danger"
+                                    title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+
+                                <button type="button" (click)="Edit(dr._id)" class="btn-sm btn btn-danger" title="Edit">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+
+
+                                <button type="button" *ngIf="dr.isBlock==false" (click)="Block(dr._id)"
+                                    class="btn-sm btn btn-warning" title="Block">
+                                    <i class="fa fa-ban"></i>
+                                </button>
+                                <button type="button" *ngIf="dr.isBlock==true" (click)="Unclock(dr._id)"
+                                    class="btn-sm btn btn-success" title="Unblock">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <!-- <button type="button"  class="btn-sm btn btn-success">
+                                <i class="fa fa-check"></i>
+                            </button> -->
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-lg-9">
+                            <h3 class="box-title m-b-0">{{dr.name |titlecase}}</h3>
+                            <address>
+                                <abbr title="Address">Address</abbr>
+                                {{dr.street |titlecase}},{{dr.city |titlecase}},{{dr.state |titlecase}},{{dr.country
+                                |titlecase}},{{dr.postcode}}
+                                <br />
+                                <abbr title="Phone">Phone: </abbr> {{dr.phonenumber}}
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+
+        </div>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <a [routerLink]="['add']"
+            class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i
+                class="ti-pencil-alt text-white"></i></a>
+    </div>
+
+    <div [style.display]="showModal ? 'block' : 'none'" class="modal" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">Driver Delete </h5>
+                    <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Are you want to delete !</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-info" data-dismiss="modal"
+                        (click)="close()">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        (click)="deleteDriver()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div [style.display]="blockModal ? 'block' : 'none'" class="modal" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">Driver Block </h5>
+                    <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Are you want to block !</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-info" data-dismiss="modal"
+                        (click)="close()">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        (click)="blockDriver()">Block</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div [style.display]="unblockModal ? 'block' : 'none'" class="modal" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">Driver Unblock </h5>
+                    <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Are you want to unblock !</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-info" data-dismiss="modal"
+                        (click)="close()">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        (click)="blockDriver()">Unblock</button>
+                </div>
+            </div>
+        </div>
+    </div>

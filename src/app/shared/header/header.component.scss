@@ -1,0 +1,16 @@
+.topbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.border-0 {
+    border: 0px !important;
+}
+
+.border-0:focus {
+    box-shadow: none;
+}
+.autocomplteList {
+    border-radius: 0px;
+}

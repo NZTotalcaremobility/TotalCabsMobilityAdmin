@@ -1,0 +1,311 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Row -->
+
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card wizard-content">
+                <div class="tab-wizard wizard-circle wizard clearfix">
+                    <div class="steps clearfix">
+                        <ul role="tablist">
+                            <li role="tab" class="first"
+                                [ngClass]="{'current': steps == 1 , 'disabled': steps != 1, 'done': steps >= 1}"
+                                aria-disabled="false" aria-selected="true" (click)="steps=1"><a id="steps-uid-1-t-0"
+                                    href="#" (click)="false" aria-controls="steps-uid-1-p-0"><span
+                                        class="current-info audible">current step: </span><span class="step">1</span>
+                                    Personal Info</a></li>
+                            <li role="tab" class=""
+                                [ngClass]="{'current': steps == 2, 'disabled': steps != 2, 'done': steps == 2}"
+                                aria-disabled="true" (click)="steps=2"><a id="steps-uid-1-t-1" href="#" (click)="false"
+                                    aria-controls="steps-uid-1-p-1"><span class="step">2</span> Address</a></li>
+                            <!-- <li role="tab" class=""
+                                [ngClass]="{'current': steps == 3, 'disabled': steps != 3, 'done': steps >= 3}"
+                                aria-disabled="true" (click)="steps=3"><a id="steps-uid-1-t-2" href="#" (click)="false"
+                                    aria-controls="steps-uid-1-p-2"><span class="step">3</span> Car Information</a></li>
+                            <li role="tab" class=" last"
+                                [ngClass]="{'current': steps == 4, 'disabled': steps != 4, 'done': steps == 4}"
+                                aria-disabled="true" (click)="steps=4"><a id="steps-uid-1-t-3" href="#" (click)="false"
+                                    aria-controls="steps-uid-1-p-3"><span class="step">4</span> License Information</a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12">
+            <div class="card wizard-content">
+                <div class="card-body tab-wizard vertical wizard-circle wizard clearfix form-material">
+                    <div class="content clearfix">
+
+                        <h6 id="steps-uid-1-h-0" tabindex="-1" class="title current" *ngIf="steps == 1"> </h6>
+                        <section id="steps-uid-1-p-0" role="tabpanel" aria-labelledby="steps-uid-1-h-0"
+                            class="body current" aria-hidden="false" *ngIf="steps == 1">
+                            <form [formGroup]="userFormTab1">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Full Name</label>
+                                            <input type="text" class="form-control" formControlName="name">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['name'].hasError('required') && (userFormTab1.controls['name'].dirty || userFormTab1.controls['name'].touched)">This
+                                                field is required</span>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['name'].hasError('validOnlyCharField') && (userFormTab1.controls['name'].dirty || userFormTab1.controls['name'].touched)">This
+                                                field is required only charecter</span>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Company name </label>
+                                            <input type="text" class="form-control" formControlName="companyname">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['companyname'].hasError('required') && (userFormTab1.controls['companyname'].dirty || userFormTab1.controls['companyname'].touched)">This
+                                                field is required</span>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['companyname'].hasError('validOnlyCharField') && (userFormTab1.controls['companyname'].dirty || userFormTab1.controls['companyname'].touched)">This
+                                                field is required only charecter</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" formControlName="email">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['email'].hasError('required') && (userFormTab1.controls['email'].dirty || userFormTab1.controls['email'].touched)">This
+                                                field is required</span>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['email'].hasError('pattern') && (userFormTab1.controls['email'].dirty || userFormTab1.controls['email'].touched)">Please
+                                                enter valid email address</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input type="number" class="form-control" formControlName="phonenumber">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['phonenumber'].hasError('required') && (userFormTab1.controls['phonenumber'].dirty || userFormTab1.controls['phonenumber'].touched)">This
+                                                field is required</span>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['phonenumber'].hasError('pattern')">This
+                                                field is required minimum 6 and max 10 digits</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" class="form-control" formControlName="password">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['password'].hasError('required') && (userFormTab1.controls['password'].dirty || userFormTab1.controls['password'].touched)">This
+                                                field is required</span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="dob">Date of Birth :</label>
+                                            <input type="date" class="form-control" formControlName="dob">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['dob'].hasError('required') && (userFormTab1.controls['dob'].dirty || userFormTab1.controls['dob'].touched)">This
+                                                field is required</span>
+                                                <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['dob'].hasError('dobValidator') && (userFormTab1.controls['dob'].dirty || userFormTab1.controls['dob'].touched)">Age is required minimum 16 years </span>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <label for="">Profile Picture:</label><br />
+                                        <div class="pic_container">
+                                            <img src={{image}} alt="Avatar" class="image">
+                                            <div class="overlay">
+
+                                                <input type="file" class="profile-pic-upload" formControlName="filename"
+                                                    id="imagePath" accept="image/*" (change)="onSelectFile($event)"
+                                                    #imageInput>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div> -->
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Profile Picture:</label><br />
+                                            <div class="pic_container">
+                                                <img src={{image}}
+                                                    onerror="this.src = '../assets/images/profile-pic.jpg'"
+                                                    class="image">
+                                                <div class="overlay">
+                                                    <input type="file" class="profile-pic-upload"
+                                                        formControlName="filename" id="imagePath" accept="image/*"
+                                                        (change)="onSelectFile($event)" #imageInput>
+
+                                                </div>
+                                            </div>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab1.controls['filename'].hasError('required') && (userFormTab1.controls['filename'].dirty || userFormTab1.controls['filename'].touched)">This
+                                                field is required</span>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="actions clearfix px-0">
+                                    <ul role="menu" aria-label="Pagination">
+
+                                        <li aria-hidden="false" aria-disabled="false" (click)="step1()"><a
+                                                (click)="submitFormTab1()"
+                                                class="btn waves-effect waves-light btn-outline-primary" href="#"
+                                                (click)="false" role="menuitem">Next</a></li>
+
+                                    </ul>
+                                </div>
+                            </form>
+
+                        </section>
+
+                        <h6 id="steps-uid-1-h-1" tabindex="-1" class="title" *ngIf="steps == 1"></h6>
+                        <section id="steps-uid-1-p-1" role="tabpanel" class="body" aria-hidden="true"
+                            *ngIf="steps == 2">
+                            <form [formGroup]="userFormTab2">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Street</label>
+                                            <input type="text" class="form-control" formControlName="street">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab2.controls['street'].hasError('required') && (userFormTab2.controls['street'].dirty || userFormTab2.controls['street'].touched)">This
+                                                field is required</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>User Type </label>
+                                            <select class="form-control  custom-select" formControlName="userType"
+                                                id="userType">
+                                                <option value="">--Select user type --</option>
+                                                <option value="Driver">Driver</option>
+                                                <option value="Normal">Normal</option>
+                                                <option value="Company">Company</option>
+                                            </select>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab2.controls['userType'].hasError('required') && (userFormTab2.controls['userType'].dirty || userFormTab2.controls['userType'].touched)">This
+                                                field is required</span>
+                                        </div>
+                                    </div> -->
+                                    <!-- 
+                                 </div>
+                                    <div class="row"> -->
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>City</label>
+                                            <input type="text" class="form-control" formControlName="city">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab2.controls['city'].hasError('required') && (userFormTab2.controls['city'].dirty || userFormTab2.controls['city'].touched)">This
+                                                field is required</span>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab2.controls['city'].hasError('validOnlyCharField') && (userFormTab2.controls['city'].dirty || userFormTab2.controls['city'].touched)">This
+                                                field is required only charecter</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>State</label>
+                                            <input type="text" class="form-control" formControlName="state">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab2.controls['state'].hasError('required') && (userFormTab2.controls['state'].dirty || userFormTab2.controls['state'].touched)">This
+                                                field is required</span>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab2.controls['state'].hasError('validOnlyCharField') && (userFormTab2.controls['state'].dirty || userFormTab2.controls['state'].touched)">This
+                                                field is required only charecter</span>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- </div>
+
+                                    <div class="row"> -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Country</label>
+                                            <select class="form-control  custom-select" formControlName="country"
+                                                id="country">
+                                                <option value="">--Select your Country--</option>
+                                                <option value="New Zealand">New Zealand</option>
+                                            </select>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab2.controls['country'].hasError('required') && (userFormTab2.controls['country'].dirty || userFormTab2.controls['country'].touched)">This
+                                                field is required</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Post Code</label>
+                                            <input type="tel" class="form-control" formControlName="postcode">
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab2.controls['postcode'].hasError('required') && (userFormTab2.controls['postcode'].dirty || userFormTab2.controls['postcode'].touched)">This
+                                                field is required</span>
+                                            <span class="text-danger"
+                                                *ngIf="userFormTab2.controls['postcode'].hasError('pattern') && (userFormTab2.controls['postcode'].dirty || userFormTab2.controls['postcode'].touched)">This
+                                                field is required 4 digits</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions clearfix px-0">
+                                    <ul role="menu" aria-label="Pagination">
+                                        <li class="" aria-disabled="false" (click)="steps = (steps == 1?1: steps - 1)">
+                                            <a class="btn waves-effect waves-light btn-outline-secondary" href="#"
+                                                (click)="false" role="menuitem">Previous</a>
+                                        </li>
+                                        <li aria-hidden="false" aria-disabled="false"
+                                            (click)="steps = (steps == 2?2: steps + 1)">
+                                            <button [disabled]="isDisabled" (click)="submitFormTab2()"
+                                                class="btn waves-effect waves-light btn-outline-primary" href="#"
+                                                (click)="false" role="menuitem">Submit</button></li>
+                                        <!-- <li aria-hidden="true" *ngIf="steps == 2"><a role="menuitem"
+                                        class="btn waves-effect waves-light btn-info">Submit</a>
+                                      </li> -->
+
+                                    </ul>
+                                </div>
+                            </form>
+                        </section>
+
+                    </div>
+                    <!-- <div class="actions clearfix">
+                        <ul role="menu" aria-label="Pagination">
+                            <li class="" aria-disabled="false" (click)="steps = (steps == 1?1: steps - 1)">
+                                <a class="btn waves-effect waves-light btn-outline-secondary" href="#" (click)="false"
+                                    role="menuitem">Previous</a>
+                            </li>
+                            <li aria-hidden="false" aria-disabled="false" (click)="steps = (steps == 2?2: steps + 1)"><a
+                                    class="btn waves-effect waves-light btn-outline-primary" href="#" (click)="false"
+                                    role="menuitem">Next</a></li>
+                            <li aria-hidden="true" *ngIf="steps == 2"><a (click)="submitForm()" role="menuitem"
+                                    class="btn waves-effect waves-light btn-info">Submit</a></li>
+
+                        </ul>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->

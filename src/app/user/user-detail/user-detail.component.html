@@ -1,0 +1,238 @@
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card"> <img class="card-img" src="{{imagefile}}"
+                    onerror="this.src = '../assets/images/profile-pic.jpg';">
+                <div class="card-img-overlay card-inverse social-profile d-flex ">
+                    <div class="align-self-center"> <img src="{{imagefile}}"
+                            onerror="this.src = '../assets/images/profile-pic.jpg';" class="img-circle" width="100">
+                        <h4 class="card-title">{{name |titlecase }} </h4>
+                        <!-- <h6 class="card-subtitle">@jamesandre</h6> -->
+                        <p class="text-white">{{street |titlecase}} , {{city |titlecase}} , {{state |titlecase}} ,
+                            {{country |titlecase}} , {{postcode}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="pull-right">
+                        <span class="">Key {{keyStatus?'Enabled':"Disabled"}}</span>
+                        <label class="switch ml-1 mr-1">
+                            <input type="checkbox" [(ngModel)]="keyStatus" (click)="toggleKey()" value="" />
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="card-body"> <small class="text-muted">Email address </small>
+                    <h6>{{email}}</h6> <small class="text-muted p-t-30 db">Phone</small>
+                    <h6>{{phonenumber}}</h6> <small class="text-muted p-t-30 db">Address</small>
+                    <h6>{{street}} , {{city}} , {{state}} , {{country}} , {{postcode}}</h6>
+                                   <br />
+                                    </div>
+            </div>
+        </div>
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-9 col-md-7">
+            <div class="card">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs profile-tab" role="tablist">
+                   
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="javascript:void(0)">Profile</a> </li>
+                    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="javascript:void(0)" role="tab"
+                                (click)="userTab = 'settings'" [ngClass]="{'active': userTab == 'settings'}">Settings</a>
+                        </li> -->
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!--second tab-->
+                    <div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 b-r"> <strong>Full Name</strong>
+                                    <br>
+                                    <p class="text-muted">{{name |titlecase}} </p>
+                                </div>
+                                <div class="col-md-3 col-xs-6 b-r"> <strong>Mobile</strong>
+                                    <br>
+                                    <p class="text-muted">{{phonenumber}}</p>
+                                </div>
+                                <div class="col-md-3 col-xs-6 b-r"> <strong>Email</strong>
+                                    <br>
+                                    <p class="text-muted">{{email}}</p>
+                                </div>
+                                <div class="col-md-3 col-xs-6"> <strong>Location</strong>
+                                    <br>
+                                    <p class="text-muted">{{street |titlecase}} , {{city |titlecase}} ,
+                                        {{state |titlecase}} , {{country |titlecase}} , {{postcode}}
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- <hr>
+                                <div class="row">
+                                    <div class="col-md-3 col-xs-6 b-r"> <strong>Car Brand</strong>
+                                        <br>
+                                        <p class="text-muted">{{carBrand}}</p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6 b-r"> <strong>Car Fuel Type</strong>
+                                        <br>
+                                        <p class="text-muted">{{carFuelType}}</p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6 b-r"> <strong>Car Type</strong>
+                                        <br>
+                                        <p class="text-muted">{{carType}}</p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6"> <strong>Reg No</strong>
+                                        <br>
+                                        <p class="text-muted">{{carRegNo}}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-3 col-xs-6 b-r"> <strong>Licence No</strong>
+                                        <br>
+                                        <p class="text-muted">{{licenseNo}}</p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6 b-r"> <strong>Licence Valid</strong>
+                                        <br>
+                                        <p class="text-muted">{{licenseValid |
+                                            date:'fullDate'}}</p>
+                                    </div>
+                                  
+                                </div>
+                                <hr> -->
+                            <!-- <div class="row">
+                                    <div class="col-md-3 col-xs-6 b-r"> <strong>Licence Front</strong>
+                                        <br>
+                                        <p class="text-muted"><img
+                                            src="{{licenseFornt}}" width="150"
+                                            height="100" alt="user"></p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6"> <strong>Licence Back</strong>
+                                        <br>
+                                        <p class="text-muted"><img
+                                            src="{{licenseBcak}}" width="150"
+                                            height="100" alt="user"></p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6 b-r"> <strong>RC Front</strong>
+                                        <br>
+                                        <p class="text-muted"><img
+                                            src="{{rcFront}}" width="150"
+                                            height="100" alt="user"></p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6"> <strong>RC Back</strong>
+                                        <br>
+                                        <p class="text-muted"><img
+                                            src="{{rcBcak}}" width="150"
+                                            height="100" alt="user"></p>
+                                    </div>
+                                </div> -->
+                            <!-- <p class="m-t-30">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In
+                                    enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede
+                                    mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum
+                                    semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
+                                    consequat vitae, eleifend ac, enim.</p>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                    has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                    printer took a galley of type and scrambled it to make
+                                    a type specimen book. It has survived not only five centuries </p>
+                                <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem
+                                    Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
+                                    including versions of Lorem Ipsum.</p> -->
+                            <!-- <h4 class="font-medium m-t-30">Skill Set</h4>
+                                <hr>
+                                <h5 class="m-t-30">Disciplin <span class="pull-right">80%</span></h5>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80"
+                                        aria-valuemin="0" aria-valuemax="100" style="width:80%; height:6px;"> <span
+                                            class="sr-only">50% Complete</span> </div>
+                                </div>
+                                <h5 class="m-t-30">Punchuality <span class="pull-right">90%</span></h5>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" role="progressbar" aria-valuenow="90"
+                                        aria-valuemin="0" aria-valuemax="100" style="width:90%; height:6px;"> <span
+                                            class="sr-only">50% Complete</span> </div>
+                                </div>
+                                <h5 class="m-t-30">Cleaness <span class="pull-right">50%</span></h5>
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50"
+                                        aria-valuemin="0" aria-valuemax="100" style="width:50%; height:6px;"> <span
+                                            class="sr-only">50% Complete</span> </div>
+                                </div>
+                                <h5 class="m-t-30">Safety <span class="pull-right">70%</span></h5>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="70"
+                                        aria-valuemin="0" aria-valuemax="100" style="width:70%; height:6px;"> <span
+                                            class="sr-only">50% Complete</span> </div>
+                                </div> -->
+                        </div>
+                    </div>
+                    <div [ngClass]="{'active': userTab == 'settings'}" class="tab-pane" role="tabpanel">
+                        <div class="card-body">
+                            <form class="form-horizontal form-material">
+                                <div class="form-group">
+                                    <label class="col-md-12">Full Name</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="Johnathan Doe"
+                                            class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12">Email</label>
+                                    <div class="col-md-12">
+                                        <input type="email" placeholder="johnathan@admin.com"
+                                            class="form-control form-control-line" name="example-email"
+                                            id="example-email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Password</label>
+                                    <div class="col-md-12">
+                                        <input type="password" value="password" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Phone No</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="123 456 7890"
+                                            class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Message</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" class="form-control form-control-line"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">Select Country</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control form-control-line">
+                                            <option>London</option>
+                                            <option>India</option>
+                                            <option>Usa</option>
+                                            <option>Canada</option>
+                                            <option>Thailand</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success">Update Profile</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+    <!-- Row -->
+    <a [routerLink]="['add']"
+        class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i
+            class="ti-pencil-alt text-white"></i></a>
+</div>

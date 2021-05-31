@@ -1,0 +1,57 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class=" col-12">
+                <div class="table-responsive">
+                    <table class="tablesaw table-bordered table-hover table responsivetable" data-tablesaw-mode="swipe"
+                        data-tablesaw-sortable data-tablesaw-sortable-switch data-tablesaw-minimap
+                        data-tablesaw-mode-switch>
+                        <thead>
+                            <tr>
+                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">Date</th>
+                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Driver Name
+                                </th>
+                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col
+                                    data-tablesaw-priority="1">users Name</th>
+                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Picked From</th>
+                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Dropped At</th>
+                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
+                                    Distance
+                                </th>
+                                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">Payment Status
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of paymentList| paginate: { itemsPerPage: 10, currentPage: page }">
+                                <td data-title="Date">{{item.dateOfJourney | date:'dd-MM-yy' }}</td>
+                                <td data-title="Driver Name">
+                                    <a [routerLink]="['/drivers/details']"
+                                        [queryParams]='{userId:item.driverId}'>{{item.driverName}}</a>
+                                </td>
+                                <td data-title="users Name">
+                                    <a [routerLink]="['/users/details']"
+                                        [queryParams]='{userId:item.userId}'>{{item.userName}}</a>
+                                </td>
+                                <td style="width: 100px;" data-title="Recieved From">{{item.pickupLocation}}</td>
+                                <td style="width: 100px;" data-title="Dropped At">{{item.dropLocation}}</td>
+                                <td data-title="Distance">{{item.distance}}</td>
+                                <td data-title="Payment Status" class="text-primary">{{item.status}}</td>
+                                <td data-title="Action">
+                                    <a [routerLink]="['/payment',item.transactionID,'invoice']"
+                                        class="btn btn-info btn-sm ml-1 mb-1">
+                                        <i class="fa fa-file-text-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 text-right">
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

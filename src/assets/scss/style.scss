@@ -1,0 +1,117 @@
+/**
+ * Table Of Content
+ *
+ * 	1. Globals
+ *	2. Headers
+ *	3. Navigations
+ *	4. Banners
+ *	5. Footers
+ *	6. app
+ *	7. Widgets
+ *	8. Custom Templates
+ */
+
+@import 'variable';
+@import 'app';
+@import 'pages';
+@import 'sidebar';
+@import '../scss/icons/font-awesome/css/font-awesome.min.css';
+@import '../scss/icons/simple-line-icons/css/simple-line-icons.css';
+@import '../scss/icons/weather-icons/css/weather-icons.min.css';
+@import '../scss/icons/linea-icons/linea.css';
+@import '../scss/icons/themify-icons/themify-icons.css';
+@import '../scss/icons/flag-icon-css/flag-icon.min.css';
+@import "../scss/icons/material-design-iconic-font/css/materialdesignicons.min.css";
+@import 'widgets';
+@import 'grid';
+@import 'responsive';
+// @import 'material';
+@import '../css/spinners.css';
+@import '../css/animate.css';
+@import '../plugins/dropify/dist/css/dropify.min.css';
+@import '../plugins/wizard/steps.css';
+@import 'colors/blue.scss';
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-bottom: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 25px;
+    ;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.multiSelect .multiselect-dropdown .dropdown-btn .selected-item {
+    background-color: #26881e !important;
+    border-color: #26881e !important;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+.multiSelect .multiselect-dropdown .dropdown-btn {
+    padding: 6px !important;
+}
+.multiSelect .multiselect-dropdown .dropdown-btn {
+    border-radius: 0 4px 4px 0 !important;
+    height: 55px;
+    border-color: #111 !important;
+    background: #ecf5eb;
+    color: #888;
+    overflow-y: scroll;
+    border-left: none !important;
+}

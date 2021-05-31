@@ -1,0 +1,367 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Dashboard</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </div>
+    <!-- <div>
+         <button
+            class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i
+                class="ti-settings text-white"></i></button> 
+    </div> -->
+</div>
+<div class="container-fluid">
+        
+        <!-- <div class="col-md-5 align-self-center">
+    
+        </div> -->
+        <div class="col-md-7 align-self-center">
+            <!-- <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Calculate Fare</li>
+            </ol> -->
+        </div>
+        <div>
+            <button
+                class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i
+                    class="ti-settings text-white"></i></button>
+        </div>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        <agm-map [zoom]="15" [latitude]="latitude" [longitude]="longitude" [disableDefaultUI]="false">
+                            <agm-marker [latitude]="latitude" [longitude]="latitude">
+                            </agm-marker>
+                            <agm-direction [renderOptions]="renderOptions" [markerOptions]="markerOptions"
+                                [origin]="{lat:latitude,lng:longitude}" [destination]="{lat:lat,lng:lng}">
+                            </agm-direction>
+                        </agm-map>
+    
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-5">
+                <div class="card card-default">
+    
+                    <div class="card-header">
+                        <h4 class="mb-0">Fare Calculator</h4>
+                    </div>
+                    <div class="card-body clearfix form-material">
+                        <form [formGroup]="fairForm">
+                            <div class="form-group">
+                                <label>Pick up</label>
+                                <!-- <input type="text" class="form-control" placeholder="-- " /> -->
+                                <input type="text" class="form-control" formControlName="pickupLocation"
+                                    placeholder="Enter Pickup" class="form-control"
+                                    (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
+                                    spellcheck="off" #Pickuplocation>
+                                <span class="text-danger"
+                                    *ngIf="fairForm.controls['pickupLocation'].hasError('required') && (fairForm.controls['pickupLocation'].dirty || fairForm.controls['pickupLocation'].touched)">This
+                                    field is required</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Drop off</label>
+                                <!-- <input type="text" class="form-control" placeholder="--" /> -->
+                                <input type="text" class="form-control" formControlName="dropLocation"
+                                    placeholder="Enter Drop off " class="form-control"
+                                    (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
+                                    spellcheck="off" #DropLocation>
+                                <span class="text-danger"
+                                    *ngIf="fairForm.controls['dropLocation'].hasError('required') && (fairForm.controls['dropLocation'].dirty || fairForm.controls['dropLocation'].touched)">This
+                                    field is required</span>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Select vehicle</label>
+                                <!-- <select class="form-control">
+        <option>Select vehicle</option>
+        <option value="car">Car</option>
+        <option value="van">Van</option>
+        </select> -->
+                                <select class="form-control custom-select" formControlName="carType"
+                                    (change)='onOptionsSelected($event)' id="carType">
+                                    <option value="">-Select vehicle-</option>
+                                    <option value="Mini">Mini</option>
+                                    <option value="9 Seater Van">9 Seater Van</option>
+                                    <option value="wheelChair Van">wheelChair Van</option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="fairForm.controls['carType'].hasError('required') && (fairForm.controls['carType'].dirty || fairForm.controls['carType'].touched)">This
+                                    field is required</span>
+                            </div>
+                            <div class="text-center mb-3">
+                                <button class="btn btn-success" (click)="submitForm()">Calculate Now</button>
+                            </div>
+                        </form>
+    
+                        <div class="text-center" *ngIf="show==true">
+                            <button class="btn btn-outline-success btn-sm" (click)="bookNow()">Book A job</button>
+                        </div>
+                        <div class="card-header ">
+                            <label>Distance : {{ kilometerdistance}} KM </label><br>
+                            <label>Duration : {{ duration}} </label><br>
+                            <label *ngIf="selected == 'Mini' ">Mini : {{ mini}} </label>
+                            <label *ngIf="selected == '9 Seater Van' ">9 Seater Van : {{ Wheelchair}} </label>
+                            <label *ngIf="selected == 'wheelChair Van' ">wheelChair Van : {{ Wheelchair}} </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <form [formGroup]="filterForm" (change)="handleSelect()">
+                <div class="form-row">
+                    <div class="col-12 text-right">
+                        <select class="custom-select w-auto" formControlName="type">
+                            <option value="" selected>select</option>
+                            <option value="week">Week</option>
+                            <option value="month">Month</option>
+                            <option value="year">Year</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xlg-6">
+            <div class="card card-inverse card-success">
+                <div class="box bg-success text-center">
+                    <h1 class="font-light text-white">{{ totalVehicles }}</h1>
+                    <h6 class="text-white">Total Vehicles</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xlg-6">
+            <div class="card card-inverse card-denger">
+                <div class="box bg-danger text-center">
+                    <h1 class="font-light text-white">{{ freeVehicles }}</h1>
+                    <h6 class="text-white">Free Vehicles</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngFor="let item of userByType" class="col-md-6 col-lg-2 col-xlg-2">
+            <div class="card card-inverse card-info">
+                <div class="box bg-info text-center">
+                    <h1 class="font-light text-white">
+                        {{ item?.totalUsers }}
+                        <h6>users</h6>
+                    </h1>
+                    <h6 *ngIf="item?.month" class="text-white">{{ months[item?.month - 1] }}, {{ item?.year }}</h6>
+                    <h6 *ngIf="item?.week" class="text-white">{{ item?.week }} week of {{ item?.year }}</h6>
+                    <h6 *ngIf="!item?.week && !item?.month" class="text-white">In {{ item?.year }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-default">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <tabset #staticTabs (click)="onHandleClick()">
+                <tab heading="All Jobs" id="tab1">
+                    <div class="table-responsive">
+                        <table *ngIf="activeTab===0" class="table table-hover no-wrap contact-list" data-page-size="10">
+                            <thead>
+                                <tr>
+                                    <th>ID #</th>
+                                    <th>Order From</th>
+                                    <th>Cust. Email</th>
+                                    <th>From-to</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr #some_id
+                                    *ngFor="let item of listOfJobs | paginate: { itemsPerPage: 10, currentPage: page }">
+                                    <td>{{ item?._id }}</td>
+                                    <td>
+                                        {{ item?.riderdetails?.name }}
+                                        <!-- <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user"
+                                                class="img-circle" /> {{ item?.riderdetails?.name }}</a> -->
+                                    </td>
+                                    <td>{{ item?.riderdetails?.email }}</td>
+                                    <td>{{ item.pickupLocation.address }} - {{ item.dropLocation.address }}</td>
+                                    <td [ngSwitch]="item?.tripstatus">
+                                        <span *ngSwitchCase="'Accepted'" class="label label-danger">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchCase="'Canceled'" class="label label-success">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchCase="'Completed'" class="label label-warning">{{
+                                            item?.tripstatus }}</span>
+                                        <span *ngSwitchCase="'Upcoming'" class="label label-info">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchCase="'Ongoing'" class="label label-primary">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchDefault class="label label-inverse">{{ item?.tripstatus ||
+                                            item?.requestAction }}</span>
+                                    </td>
+                                    <td>{{ item?.dateOfJourney }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+                <tab heading="Allocated Jobs">
+                    <div class="table-responsive">
+                        <table *ngIf="activeTab===1" class="table table-hover no-wrap contact-list" data-page-size="10">
+                            <thead>
+                                <tr>
+                                    <th>ID #</th>
+                                    <th>Order From</th>
+                                    <th>Cust. Email</th>
+                                    <th>From-to</th>
+                                    <th>Status</th>
+
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr #some_id2
+                                    *ngFor="let item of allocatedJobs | paginate: { itemsPerPage: 10, currentPage: pageTab1 }">
+                                    <td>{{ item?._id }}</td>
+                                    <td>
+                                        <!-- <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user" -->
+                                        <!-- class="img-circle" />  -->
+                                        {{ item?.riderdetails?.name }}
+                                        <!-- </a> -->
+                                    </td>
+                                    <td>{{ item?.riderdetails?.email }}</td>
+                                    <td>{{ item.pickupLocation.address }} - {{ item.dropLocation.address }}</td>
+                                    <td [ngSwitch]="item?.tripstatus">
+                                        <span *ngSwitchCase="'Accepted'" class="label label-danger">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchCase="'Canceled'" class="label label-danger">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchCase="'Completed'" class="label label-warning">{{
+                                            item?.tripstatus }}</span>
+                                        <span *ngSwitchCase="'Ongoing'" class="label label-primary">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchCase="'Upcoming'" class="label label-info">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchDefault class="label label-inverse">{{ item?.tripstatus }}</span>
+                                    </td>
+                                    <td>{{ item?.dateOfJourney | date: 'dd-MM-yyyy' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+                <tab heading="Declined Jobs">
+                    <div class="table-responsive">
+                        <table *ngIf="activeTab===2" class="table table-hover no-wrap contact-list" data-page-size="10">
+                            <thead>
+                                <tr>
+                                    <th>ID #</th>
+                                    <th>Order From</th>
+                                    <th>Cust. Email</th>
+                                    <th>From-to</th>
+                                    <th>Status</th>
+
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of declinedofJobs | paginate: { itemsPerPage: 10, currentPage: pageTab2 }">
+                                    <td>{{ item?._id }}</td>
+                                    <td>
+                                        {{ item?.riderdetails?.name }}
+
+                                        <!-- <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user"
+                                                class="img-circle" /> {{ item?.riderdetails?.name }}</a> -->
+                                    </td>
+                                    <td>{{ item?.riderdetails?.email }}</td>
+                                    <td>{{ item.pickupLocation.address }} - {{ item.dropLocation.address }}</td>
+                                    <td [ngSwitch]="item?.tripstatus">
+                                        <span *ngSwitchCase="'Accepted'" class="label label-danger">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchCase="'Canceled'" class="label label-danger">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchCase="'Completed'" class="label label-warning">{{
+                                            item?.tripstatus }}</span>
+                                        <span *ngSwitchCase="'Upcoming'" class="label label-info">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchCase="'Ongoing'" class="label label-primary">{{ item?.tripstatus
+                                            }}</span>
+                                        <span *ngSwitchDefault class="label label-inverse">{{ item?.tripstatus }}</span>
+                                    </td>
+                                    <td>{{ item?.dateOfJourney | date: 'dd-MM-yyyy' }}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </tab>
+            </tabset>
+            <div *ngIf="activeTab===0">
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            </div>
+            <div *ngIf="activeTab===1">
+                <pagination-controls (pageChange)="pageTab1 = $event"></pagination-controls>
+            </div>
+            <div *ngIf="activeTab===2">
+                <pagination-controls (pageChange)="pageTab2 = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Assign Jobs</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-material">
+            <div class="form-group">
+                <label><small>Starting Address</small></label>
+                <div class="form-control d-block"><strong>Chandigarh</strong></div>
+            </div>
+            <div class="form-group">
+                <label><small>Destination Address</small></label>
+                <div class="form-control d-block"><strong>Ludhiana</strong></div>
+            </div>
+            <div class="form-group">
+                <label>Nearest Drivers</label>
+                <input type="text" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer text-right">
+        <button class="btn btn-primary">Assign Job</button>
+    </div>
+</ng-template>
+<!-- <agm-map [latitude]="latitude" [longitude]="longitude" >
+    
+    
+    <agm-marker *ngFor="let d of driversdata" [iconUrl]="{ url: ('../assets/images/cab.jpg')}" [latitude]="d.lat" [longitude]="d.lang" >
+    <agm-info-window [disableAutoPan]="false">
+    
+    <div>
+    <a class="btn btn-attention pull-right">
+    <br> licencenumber:{{d.licencenumber}}</a>
+    </div>
+    
+    </agm-info-window>
+    
+    </agm-marker>
+    <agm-direction
+    [renderOptions]="renderOptions"
+    [markerOptions]="markerOptions"
+    [origin]="start"
+    [destination]="end"
+    >
+    </agm-direction>
+    </agm-map> -->

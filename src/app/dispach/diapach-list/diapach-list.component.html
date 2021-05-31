@@ -1,0 +1,197 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Dispatch Jobs</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item active">Dispatch</li>
+        </ol>
+    </div>
+    <div class="form-group col-md-4">
+        <input type="text" class="form-control"  placeholder="Enter Keyword for filter result" [(ngModel)]="searchedKeyword">
+      </div>
+
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 align-self-center">
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active"data-toggle="tab" [routerLink]="['/jobs']" role="tab">
+                        Dispatch Job
+                    </a> 
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/cover']"  role="tab">
+                        Cover Job
+                    </a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/addDispatch']" role="tab">
+                        Add Dispatch Job
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/addCover']" role="tab">
+                        Add Cover Job
+                    </a>
+                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/bookings']" role="tab">
+                        Bookings
+                    </a>
+                 </li>
+            </ul>
+        </div>
+        <div class="col-md-12 align-self-center">
+
+<div class="card dispatch_list">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="tablesaw table-bordered table-hover table responsivetable" data-tablesaw-mode="swipe"
+                data-tablesaw-sortable data-tablesaw-sortable-switch data-tablesaw-minimap data-tablesaw-mode-switch>
+                <thead>
+                    <tr>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 6%;">Id
+                        </th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 8%;">Date
+                        </th>
+                        <!-- <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 15%;">Day
+                            (Recursive Booking)</th> -->
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 8%;">Pickup
+                            Time</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 7%;">Driver
+                        </th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2" style="width: 14%;">Picked
+                            From </th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2" style="width: 14%;">
+                            Intermediate </th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2" style="width: 14%;">
+                            Dropped At</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1" style="width: 7%;">
+                            Distance</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4" style="width: 5%;">Fare
+                        </th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4" style="width: 8%;" class="center">Status
+                        </th>
+                        <th style="width: 10%;" class="center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of cabList | filter:searchedKeyword">
+                        <td data-title="Date">{{data?.jobid}}</td>
+                        <td data-title="Date">{{data?.dateOfJourney | date:'yyyy-MM-dd'}}</td>
+                        <!-- <td data-title="Day">{{data?.dayOfJourney}}</td> -->
+                        <td data-title="Day">{{data.pickUptime}}</td>
+                        <td data-title="Driver Name"> {{data?.driverdetails?.name}} </td>
+                        <td data-title="Recieved From">{{data?.pickupLocation?.address}}</td>
+                        <td data-title="Intermediate From">
+                            <div *ngFor="let cab of data.midlocation">
+                                {{cab?.location }}
+                            </div>
+                        </td>
+                        <td data-title="Dropped At">{{data?.dropLocation?.address}}</td>
+                        <td data-title="Distance">{{data?.distance}}KM</td>
+                        <td data-title="Payment Status" class="text-primary">${{data?.fare}}</td>
+                        <td data-title="Job Status" class="text-primary center">{{data?.tripstatus}}</td>
+                        <td data-title="Action" class="center">
+                            <a [routerLink]="['/jobs/dispatch',data._id]" class="btn btn-info btn-sm ml-1 mb-1"><i
+                                    class="fa fa fa-edit"></i></a>
+                            <button type="button" (click)="getId(data._id)" class="btn btn-danger btn-sm ml-1 mb-1"><i
+                                    class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td data-title="Date">Nov 25, 2020</td>
+                        <td data-title="Driver Name">
+                            <a [routerLink]="['/drivers/details']">Rajat</a>
+                        </td>
+                        <td data-title="users Name">
+                            <a [routerLink]="['/users/3/details']">Rajeev</a>
+                        </td>
+                        <td data-title="Recieved From">Amritsar</td>
+                        <td data-title="Dropped At">Shimla</td>
+                        <td data-title="Distance">450KM</td>
+                        <td data-title="Payment Status" class="text-themecolor">In-Progress</td>
+                        <td data-title="Action">
+                            <a [routerLink]="['/payment/23fgh/invoice']" class="btn btn-info btn-sm ml-1 mb-1"><i
+                                    class="fa fa-file-text-o"></i></a>
+                            <button type="button" class="btn btn-danger btn-sm ml-1 mb-1"><i
+                                    class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-title="Date">Nov 24, 2020</td>
+                        <td data-title="Driver Name">
+                            <a [routerLink]="['/drivers/details']">Sukhdev Singh</a>
+                        </td>
+                        <td data-title="users Name">
+                            <a [routerLink]="['/users/2/details']">Kiran Sharma</a>
+                        </td>
+                        <td data-title="Recieved From">Old Mandir, Ludhiana</td>
+                        <td data-title="Dropped At">Chandigarh</td>
+                        <td data-title="Distance">150KM</td>
+                        <td data-title="Payment Status" class="text-warning">Pending</td>
+                        <td data-title="Action">
+                            <a [routerLink]="['/payment/23fgh/invoice']" class="btn btn-info btn-sm ml-1 mb-1"><i
+                                    class="fa fa-file-text-o"></i></a>
+                            <button type="button" class="btn btn-danger btn-sm ml-1 mb-1"><i
+                                    class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-title="Date">Nov 23, 2020</td>
+                        <td data-title="Driver Name">
+                            <a [routerLink]="['/drivers/details']">Sukhdev Singh</a>
+                        </td>
+                        <td data-title="users Name">
+                            <a [routerLink]="['/users/1/details']">Kiran Sharma</a>
+                        </td>
+                        <td data-title="Recieved From">Old Mandir, Ludhiana</td>
+                        <td data-title="Dropped At">Chandigarh</td>
+                        <td data-title="Distance">150KM</td>
+                        <td data-title="Payment Status" class="text-danger">Rejected</td>
+                        <td data-title="Action">
+                            <a [routerLink]="['/payment/23fgh/invoice']" class="btn btn-info btn-sm ml-1 mb-1"><i
+                                    class="fa fa-file-text-o"></i></a>
+                            <button type="button" class="btn btn-danger btn-sm ml-1 mb-1"><i
+                                    class="fa fa-trash"></i></button>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+            <div class="center">
+            </div>
+        </div>
+    </div>
+    <div [style.display]="showModal ? 'block' : 'none'" class="modal" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">Dispatch Delete </h5>
+                    <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Are you want to delete !</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-info" data-dismiss="modal"
+                        (click)="close()">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        (click)="deleteJob()">Delete</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <a [routerLink]="['add']"
+class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i
+    class="ti-pencil-alt text-white"></i></a> -->
+
+    </div>
+    </div>
+    </div>

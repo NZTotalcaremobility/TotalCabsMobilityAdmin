@@ -1,0 +1,192 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Reports</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item active">Reports</li>
+        </ol>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]='filterForm'>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" ngxDaterangepickerMd placeholder="Select Date Range"
+                                    [locale]="{applyLabel: 'Apply', format: 'DD-MM-YYYY'}" [(ngModel)]="selected"
+                                    formControlName="daterange" class="form-control position-relative" />
+                            </div>
+                            <div class="col">
+                                <select class="custom-select" formControlName="driver">
+                                    <option value='' selected>Select Driver</option>
+                                    <option *ngFor="let item of driverList" value="{{item?._id}}">
+                                        {{item.name.charAt(0)|uppercase}}{{item.name.substr(1)}}</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select class="custom-select" formControlName="type">
+                                    <option value='' selected>Select Trip Status</option>
+                                    <option value='Normal' selected>Normal</option>
+                                    <option value='Hailjob' selected>Hail Job</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select class="custom-select" formControlName="paymentStatus">
+                                    <option value='' selected>Select Payment Status</option>
+                                    <option value='hold' selected>Hold</option>
+                                    <option value='processing' selected>Processing</option>
+                                    <option value='completed' selected>Completed</option>
+                                    <option value='failed' selected>Failed</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <!-- <div class="btn-group"> -->
+                                <button class="btn" (click)='getFlterReport()'>Filter</button>
+                                <!-- <button class="btn btn-sm btn-danger" (click)='reset()'>reset</button> -->
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="row">
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-2 col-xlg-2">
+                            <div class="card card-inverse card-info">
+                                <div class="box bg-info text-center">
+                                    <h1 class="font-light text-white">{{totalJob}}</h1>
+                                    <h6 class="text-white">Total Jobs</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-2 col-xlg-2">
+                            <div class="card card-success card-inverse">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{totalDriver}}</h1>
+                                    <h6 class="text-white">Total Driver</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-2 col-xlg-2">
+                            <div class="card card-inverse card-danger">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{completedJob}}</h1>
+                                    <h6 class="text-white">Completed Jobs</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-2 col-xlg-2">
+                            <div class="card card-inverse card-dark">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{PendingJob}}</h1>
+                                    <h6 class="text-white">Pending Jobs</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-2 col-xlg-2">
+                            <div class="card card-inverse card-primary">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{ongoingJob}}</h1>
+                                    <h6 class="text-white">Ongoing Jobs</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <!-- Column -->
+                        <div class="col-md-6 col-lg-2 col-xlg-2">
+                            <div class="card card-inverse card-success">
+                                <div class="box text-center">
+                                    <h1 class="font-light text-white">{{upcomingJob}}</h1>
+                                    <h6 class="text-white">Upcoming Jobs</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                    </div>
+                    <div class="table-responsive">
+                        <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list"
+                            data-page-size="10">
+                            <thead>
+                                <tr>
+                                    <th>ID #</th>
+                                    <th>Order From</th>
+                                    <th>Cust. Email</th>
+                                    <th>Picked From - Dropped At</th>
+                                    <th>Status</th>
+                                    <th>Assign to</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of list | paginate: { itemsPerPage: 10, currentPage: page }">
+                                    <td>{{item?._id}}</td>
+                                    <td>
+                                        <!-- <a href="javascript:void(0)"> -->
+                                        <!-- <img src="{{this.imageURL+item?.user?.imageFile}}" alt="user"
+                                                class="img-circle" onerror="" /> -->
+                                        {{item?.user?.name}}
+                                        <!-- </a> -->
+                                    </td>
+                                    <td>{{item?.user?.email}}</td>
+                                    <td>{{item?.jobid?.pickUpLocation?.address}} -
+                                        {{item?.jobid?.dropLocation?.address}}</td>
+                                    <td [ngSwitch]="item.jobid?.tripstatus">
+                                        <span *ngSwitchCase="'Accepted'"
+                                            class="label label-primary">{{item.jobid?.tripstatus}}</span>
+                                        <span *ngSwitchCase="'Canceled'"
+                                            class="label label-danger">{{item.jobid?.tripstatus}}</span>
+                                        <span *ngSwitchCase="'Completed'"
+                                            class="label label-success">{{item.jobid?.tripstatus}}</span>
+                                        <span *ngSwitchCase="'Upcoming'"
+                                            class="label label-info">{{item.jobid?.tripstatus}}</span>
+                                        <span *ngSwitchDefault
+                                            class="label label-inverse">{{item.jobid?.tripstatus}}</span>
+                                    </td>
+                                    <td>{{item?.driverdetails?.name}}</td>
+                                    <td>{{item?.jobid?.tripStartTime | date:'dd-MM-yyyy'}}</td>
+                                    <td>
+                                        <!-- <button type="button"
+                                            class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn"
+                                            data-toggle="tooltip" data-original-title="Delete"><i class="ti-close"
+                                                aria-hidden="true"></i></button> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+</div>

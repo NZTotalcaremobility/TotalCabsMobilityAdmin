@@ -1,0 +1,108 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple"
+    [fullScreen]="true">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="tablesaw table-bordered table-hover table responsivetable" data-tablesaw-mode="swipe"
+                data-tablesaw-sortable data-tablesaw-sortable-switch data-tablesaw-minimap data-tablesaw-mode-switch>
+                <thead>
+                    <tr>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col
+                            data-tablesaw-priority="1">Rider Name</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col
+                            data-tablesaw-priority="1">Driver Name</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">From</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">To</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">Trip Start Time</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">Trip End Time</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">Distance</th>
+                        <!-- <th>Asign Job</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of tempData  | paginate: { itemsPerPage: 10, currentPage: p }">
+                        <td data-title="users Name">
+                            <a [routerLink]="" (click)="getUID(data.user?._id)">{{data?.user?.name
+                                |titlecase}}</a>
+                        </td>
+                        <td data-title="users Name">
+                            <a [routerLink]="" (click)="getUID(data.driverdetails?._id)">{{data?.driverdetails?.name
+                                |titlecase}}</a>
+                        </td>
+                        <td data-title="From">{{data?.pickupLocation?.address}}</td>
+                        <td data-title="To">{{data?.dropLocation?.address}}</td>
+                        <td data-title="To">{{data?.tripStartTime | date:'mediumDate'}}</td>
+
+                        <td data-title="To">{{data?.tripendtime | date:'mediumDate'}}</td>
+                        <td data-title="Distance">{{data?.distance}}</td>
+                        <!-- <td data-title="Action">
+                            <button type="button" class="btn btn-danger btn-sm ml-1 mb-1"
+                                (click)="getId(data.user._id)"><i class="fa fa-check"></i></button>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
+<!-- 
+<div [style.display]="showModal ? 'block' : 'none'" class="modal" id="myModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">Asign Job</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Are you want to asign job !</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info" data-dismiss="modal"
+                    (click)="close()">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="asignJob()">Asign
+                    Job</button>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div [style.display]="profileModal ? 'block' : 'none'" class="modal" id="profileModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">User Details</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-material">
+                    <div class="form-group">
+                        <label><small>Name</small></label>
+                        <div class="form-control d-block"><strong>{{name}}</strong></div>
+
+                    </div>
+                    <div class="form-group">
+                        <label><small>Email</small></label>
+                        <div class="form-control d-block"><strong>{{email}}</strong></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number </label>
+                        <div class="form-control d-block"><strong>{{phonenumber}}</strong></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info" data-dismiss="modal"
+                    (click)="close()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div> 

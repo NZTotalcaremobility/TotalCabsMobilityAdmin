@@ -1,0 +1,79 @@
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- User profile -->
+        <!-- <div class="user-profile">            
+            <div class="profile-img">
+                <img src="{{ currentuser['imagefile'] }}" alt="user" />            
+                <div class="notify setpos"><span class="heartbit"></span> <span class="point"></span></div>
+            </div>            
+            <div class="profile-text">
+                <h5>{{ currentuser['name'] }}</h5>
+                <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
+                <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
+                <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+                <div class="dropdown-menu animated flipInY">                    
+                    <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a>                    
+                    <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a>                    
+                    <a href="#" class="dropdown-item"><i class="ti-email"></i> Inbox</a>                    
+                    <div class="dropdown-divider"></div>                    
+                    <a href="#" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>                    
+                    <div class="dropdown-divider"></div>                    
+                    <a href="#" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>                   
+                </div>
+            </div>
+        </div> -->
+        <!-- End User profile text-->
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li *ngIf="role === 'Admin' || permissionList.includes('dashboard')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/dashboard']" routerLinkActive="active"><i
+                            class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+                </li>
+                <!-- <li *ngIf="role === 'Admin' || permissionList.includes('maps')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/maps']" routerLinkActive="active"><i
+                            class="mdi mdi-map"></i><span class="hide-menu">Locations</span></a>
+                </li> -->
+                <li *ngIf="role === 'Admin' || permissionList.includes('drivers')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/drivers']" routerLinkActive="active"><i
+                            class="mdi mdi-car"></i><span class="hide-menu">Drivers</span></a>
+                </li>
+                <li *ngIf="role === 'Admin' || permissionList.includes('users')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/users']" routerLinkActive="active"><i
+                            class="mdi mdi-account-settings"></i><span class="hide-menu">Users</span></a>
+                </li>
+                <li *ngIf="role === 'Admin' || permissionList.includes('chat')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/chat']" routerLinkActive="active"><i
+                            class="mdi mdi-wechat"></i><span class="hide-menu">Chat</span></a>
+                </li>
+                <!-- <li *ngIf="role === 'Admin' || permissionList.includes('jobs')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/jobs']" routerLinkActive="active"><i
+                            class="mdi mdi-car-wash"></i><span class="hide-menu">Cover Jobs</span></a>
+                </li> -->
+                <li *ngIf="role === 'Admin' || permissionList.includes('jobs')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/jobs']" routerLinkActive="active"><i
+                            class="mdi mdi-car-wash"></i><span class="hide-menu">Dispatch Jobs</span></a>
+                </li>
+                <!-- <li *ngIf="role === 'Admin' || permissionList.includes('bookings')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/bookings']" routerLinkActive="active"><i
+                            class="mdi mdi-wallet-giftcard"></i><span class="hide-menu">Bookings</span></a>
+                </li> -->
+                <li *ngIf="role === 'Admin' || permissionList.includes('payment')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/payment']" routerLinkActive="active"><i
+                            class="mdi mdi-car-wash"></i><span class="hide-menu">Payment</span></a>
+                </li>
+                <li *ngIf="role === 'Admin' || permissionList.includes('reports')" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/reports']" routerLinkActive="active"><i
+                            class="mdi mdi-file-document-box"></i><span class="hide-menu">Reports </span></a>
+                </li>
+                <li *ngIf="role === 'Admin'" routerLinkActive="active">
+                    <a class="waves-effect waves-dark" [routerLink]="['/manageRoles']" routerLinkActive="active"><i
+                            class="mdi mdi-file-document-box"></i><span class="hide-menu">Manage Roles </span></a>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>

@@ -1,0 +1,269 @@
+.page-wrapper {
+    height: 100%;
+}
+.align {
+    display: flex;
+    place-items: center;
+}
+
+.icons {
+    display: none;
+}
+
+.icon {
+    display: inline-block;
+    fill: #ffffff;
+    font-size: 1rem;
+    height: 1em;
+    vertical-align: middle;
+    width: 1em;
+}
+
+input {
+    background-image: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    transition: background-color 0.3s;
+}
+
+input[type='submit'] {
+    cursor: pointer;
+}
+
+.form input[type='password'],
+.form input[type='text'],
+.form input[type='submit'] {
+    width: 100%;
+}
+
+.form__field {
+    display: flex;
+    margin: 10px 5px;
+}
+
+.form__input {
+    flex: 1;
+}
+
+/* modules/login.css */
+
+.login {
+    color: #fff;
+}
+
+.login label,
+.login input[type='text'],
+.login input[type='password'],
+.login input[type='submit'] {
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 0;
+}
+
+.login label {
+    background-color: #26881e;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    color: #333333;
+}
+.form__field {
+    & > label {
+        color: #fff;
+    }
+}
+.login input[type='password'],
+.login input[type='text'] {
+    background-color: #ecf5eb;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border: solid 1px #26881e;
+    color: #333333;
+}
+
+.login input[type='password']:focus,
+.login input[type='password']:hover,
+.login input[type='text']:focus,
+.login input[type='text']:hover {
+    background-color: #fff;
+}
+
+.login input[type='submit'] {
+    background-color: #26881e;
+    color: #fff;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.login input[type='submit']:focus,
+.login input[type='submit']:hover {
+    background-color: #457d40;
+}
+
+.text--center {
+    text-align: center;
+}
+.bg-green {
+    background-color: #5db755;
+    background: #5db755;
+    background: #5db755; /* Old browsers */
+    background: -moz-linear-gradient(top, #5db755 0%, #5db755 40%, #c6ffcc 40%, #c6ffcc 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #5db755 0%, #5db755 40%, #c6ffcc 40%, #c6ffcc 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #5db755 0%, #5db755 40%, #c6ffcc 40%, #c6ffcc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    @media (min-width: 600px) {
+        background: -moz-linear-gradient(top, #5db755 0%, #5db755 50%, #c6ffcc 50%, #c6ffcc 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #5db755 0%, #5db755 50%, #c6ffcc 50%, #c6ffcc 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #5db755 0%, #5db755 50%, #c6ffcc 50%, #c6ffcc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    }
+
+    @media (min-width: 992px) {
+        background: -moz-linear-gradient(left, #5db755 0%, #5db755 50%, #c6ffcc 50%, #c6ffcc 100%);
+        background: -webkit-linear-gradient(left, #5db755 0%, #5db755 50%, #c6ffcc 50%, #c6ffcc 100%);
+        background: linear-gradient(to right, #5db755 0%, #5db755 50%, #c6ffcc 50%, #c6ffcc 100%);
+    }
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: none;
+    -webkit-text-fill-color: #333;
+    background-color: #5db755;
+}
+.logo {
+    margin: 0 auto 15px;
+    width: 44px;
+}
+.mx-logo {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+    z-index: 99;
+    width: 90px !important;
+
+    @media (min-width: 600px) {
+        width: 200px !important;
+    }
+}
+.container-fluid {
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 0;
+}
+
+.background {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+
+    mask-image: radial-gradient(white 0%, white 30%, transparent 80%, transparent);
+}
+.container-lft {
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 0;
+    width: 100%;
+    height: 100;
+}
+.circle-container {
+    $particleNum: 200;
+    $particleColor: hsl(180, 100%, 80%);
+
+    position: absolute;
+    transform: translateY(-5vh);
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    left: -10px;
+    right: 0;
+    .circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        mix-blend-mode: screen;
+        background-image: radial-gradient(hsl(180, 100%, 80%), hsl(180, 100%, 80%) 10%, hsla(180, 100%, 80%, 0) 56%);
+
+        animation: fadein-frames 200ms infinite, scale-frames 2s infinite;
+
+        @keyframes fade-frames {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scale-frames {
+            0% {
+                transform: scale3d(0.4, 0.4, 1);
+            }
+
+            50% {
+                transform: scale3d(2.2, 2.2, 1);
+            }
+
+            100% {
+                transform: scale3d(0.4, 0.4, 1);
+            }
+        }
+    }
+
+    $particleBaseSize: 8;
+
+    @for $i from 1 through $particleNum {
+        &:nth-child(#{$i}) {
+            $circleSize: random($particleBaseSize);
+            width: $circleSize + px;
+            height: $circleSize + px;
+
+            $startPositionY: random(10) + 100;
+            $framesName: 'move-frames-' + $i;
+            $moveDuration: 28000 + random(9000) + ms;
+
+            animation-name: #{$framesName};
+            animation-duration: $moveDuration;
+            animation-delay: random(37000) + ms;
+
+            @keyframes #{$framesName} {
+                from {
+                    transform: translate3d(#{random(100) + vw}, #{$startPositionY + vh}, 0);
+                }
+
+                to {
+                    transform: translate3d(#{random(100) + vw}, #{- $startPositionY - random(30) + vh}, 0);
+                }
+            }
+
+            .circle {
+                animation-delay: random(4000) + ms;
+            }
+        }
+    }
+}
+
+.w-50 {
+    @media (max-width: 1200px) {
+        width: 80% !important;
+    }
+    @media (max-width: 767px) {
+        width: 100% !important;
+    }
+}
+
+.ht-100 {
+    @media (min-width: 992px) {
+        height: 100%;
+    }
+}

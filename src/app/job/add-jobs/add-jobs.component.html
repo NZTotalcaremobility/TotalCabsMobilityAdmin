@@ -1,0 +1,324 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Add Cover Job</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item active">Dispatch</li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 align-self-center">
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link"data-toggle="tab" [routerLink]="['/jobs']" role="tab">
+                        Dispatch Job
+                    </a> 
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/cover']"  role="tab">
+                        Cover Job
+                    </a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/addDispatch']" role="tab">
+                        Add Dispatch Job
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" [routerLink]="['/jobs/addCover']" role="tab">
+                        Add Cover Job
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" [routerLink]="['/jobs/bookings']" role="tab">
+                        Booking
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-12 align-self-center">
+
+<div class="card wizard-content">
+    <div class="card-body tab-wizard vertical wizard-circle wizard clearfix form-material">
+        <form [formGroup]="userForm">
+            <div class="row">
+                <div class="col-md-6">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>User </label>
+                        <!-- <select class="form-control custom-select" formControlName="user" id="user" #userSelect
+                            (change)='onSelected(userSelect.value)'>
+                            <option value="">--Select User--</option>
+                            <option *ngFor="let temp of tempData" value="{{temp._id}}">{{temp.name}}
+                            </option>
+                        </select> -->
+                        <!-- <input type="text" class="form-control border-0" placeholder="Enter Name"
+                            formControlName="name" /> -->
+                        <div class="input-group">
+                            <input type="text " *ngIf="!isOver" class="form-control border-0"
+                                placeholder="Enter Name or Pin" formControlName="name" (keyup)="handleSearch()" />
+                            <div class="input-group-append">
+                                <div class="input-group-text border-0 bg-transparent"><button
+                                        (click)="onHandleSelect('new',{})"
+                                        class="btn btn-outline-success btn-sm">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="isAutoCompleteShown" class="list-group autocomplteList">
+                            <a *ngFor="let item of searchResult" (click)="onHandleSelect('click',item)"
+                                href="javascript:void(0)" class="list-group-item list-group-item-action"> <img
+                                    src="{{ imagePath }}{{ item.imagefile || 'profile-pic.jpg' }}" alt=""
+                                    class="profile-pic" />{{ item?.name }} - {{ item?.phonenumber }}</a>
+                        </div>
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['name'].hasError('required') && (userForm.controls['name'].dirty || userForm.controls['name'].touched)">This
+                            field is required</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email">User Email</label>
+                                <input type="text" class="form-control" formControlName="email">
+                                <!-- <span class="text-danger"
+                                        *ngIf="userForm.controls['email'].hasError('required') && (userForm.controls['email'].dirty || userForm.controls['email'].touched)">This
+                                        field is required</span> -->
+                                <span class="text-danger"
+                                    *ngIf="userForm.controls['email'].hasError('pattern') && (userForm.controls['email'].dirty || userForm.controls['email'].touched)">Please
+                                    enter valid email address</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phonenumber">Phone Number</label>
+                                <input type="tel" class="form-control" formControlName="phonenumber">
+                                <!-- <span class="text-danger"
+                                        *ngIf="userForm.controls['phonenumber'].hasError('required') && (userForm.controls['phonenumber'].dirty || userForm.controls['phonenumber'].touched)">This
+                                        field is required</span> -->
+                                <span class="text-danger"
+                                    *ngIf="userForm.controls['phonenumber'].hasError('pattern')">This
+                                    field is required 10 digits</span>
+                            </div>
+                        </div>
+                        <!-- <h6>Selected User Email : {{userEmail}} & Phonenumber : {{userPhone}}</h6> -->
+                    </div>
+                </div>
+                <!-- <div class="col-md-6">
+    <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" value="09:00" class="form-control" formControlName="name">
+    <span class="text-danger"
+    *ngIf="userForm.controls['name'].hasError('required') && (userForm.controls['name'].dirty || userForm.controls['name'].touched)">This
+    field is required</span>
+    <span class="text-danger"
+    *ngIf="userForm.controls['name'].hasError('validOnlyCharField') && (userForm.controls['name'].dirty || userForm.controls['name'].touched)">This
+    field is required only charecter</span>
+    </div>
+    </div>
+    <div class="col-md-6">
+    <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" value="09:00" class="form-control" formControlName="email">
+    <span class="text-danger"
+    *ngIf="userForm.controls['email'].hasError('required') && (userForm.controls['email'].dirty || userForm.controls['email'].touched)">This
+    field is required</span>
+    <span class="text-danger"
+    *ngIf="userForm.controls['email'].hasError('pattern') && (userForm.controls['email'].dirty || userForm.controls['email'].touched)">Please
+    enter valid email address</span>
+    </div>
+    </div>
+    <div class="col-md-6">
+    <div class="form-group">
+    <label for="phonenumber">Phone Number</label>
+    <input type="text" value="09:00" class="form-control" formControlName="phonenumber">
+    <span class="text-danger"
+    *ngIf="userForm.controls['phonenumber'].hasError('required') && (userForm.controls['phonenumber'].dirty || userForm.controls['phonenumber'].touched)">This
+    field is required</span>
+    <span class="text-danger" *ngIf="userForm.controls['phonenumber'].hasError('pattern')">This
+    field is required 10 digits</span>
+    </div>
+    </div> -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Vehicle </label>
+                        <!-- <input type="input" class="form-control" formControlName="driverName"> -->
+                        <select class="form-control custom-select" formControlName="carType" id="carType" #mySelect
+                            (change)='onOptionsSelected(mySelect.value)'>
+                            <option value="">--Select Vehicle--</option>
+                            <option value="wheelChair Van">Wheelchair Van</option>
+                            <option value="9 Seater Van">9 Seater Van</option>
+                            <option value="mini">Car</option>
+                        </select>
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['carType'].hasError('required') && (userForm.controls['carType'].dirty || userForm.controls['carType'].touched)">This
+                            field is required</span>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dateOfJourney">Date Of Journey</label>
+                        <!-- <input type="date" class="form-control" formControlName="dateOfJourney" [min]="minDate"> -->
+                        <!-- <input type="date" class="form-control" formControlName="dateOfJourney" > -->
+                        <input placeholder="dd-mm-yyyy" type="text" class="form-control" [minDate]="minDate"
+                            formControlName="dateOfJourney" #dp="bsDatepicker" bsDatepicker>
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['dateOfJourney'].hasError('required') && (userForm.controls['dateOfJourney'].dirty || userForm.controls['dateOfJourney'].touched)">This
+                            field is required</span>
+                        <!-- <span class="text-danger"
+    *ngIf="userForm.controls['dateOfJourney'].hasError('pattern')">Fill the address not below 16 year</span> -->
+                    </div>
+                </div>
+                <!-- <div class="col-md-6" *ngIf="rbData==true"> -->
+                <!-- <div class="form-group"> -->
+                <!-- <label for="dayOfJourney">Day Of Journey</label>
+                    <ng-multiselect-dropdown class="form-control" [placeholder]="'Select Day'"
+                        [settings]="dropdownSettings" [data]="cities" formControlName="dayOfJourney"
+                        [disabled]="disabled" (onSelect)="onItemSelect($event)">
+                    </ng-multiselect-dropdown>
+                    <span class="text-danger"
+                        *ngIf="userForm.controls['dayOfJourney'].hasError('required') && (userForm.controls['dayOfJourney'].dirty || userForm.controls['city'].touched)">This
+                        field is required</span> -->
+                <!-- </div> -->
+
+                <!-- </div> -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="timeOfJourney">Time Of Journey</label>
+                        <input type="time" class="form-control" formControlName="timeOfJourney">
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['timeOfJourney'].hasError('required') && (userForm.controls['timeOfJourney'].dirty || userForm.controls['timeOfJourney'].touched)">This
+                            field is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Pickup Location </label>
+                        <!-- <input type="text" class="form-control" formControlName="pickUpLocation"> -->
+                        <input type="text" class="form-control" formControlName="pickUpLocation"
+                            placeholder="Enter pickup location" class="form-control"
+                            (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
+                            spellcheck="off" #Pickuplocation>
+
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['pickUpLocation'].hasError('required') && (userForm.controls['pickUpLocation'].dirty || userForm.controls['pickUpLocation'].touched)">This
+                            field is required</span>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Drop Location </label>
+                        <!-- <input type="text" class="form-control" formControlName="dropUpLocation"> -->
+                        <input type="text" class="form-control" formControlName="dropUpLocation"
+                            placeholder="Enter drop location" class="form-control"
+                            (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
+                            spellcheck="off" #DropLocation>
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['dropUpLocation'].hasError('required') && (userForm.controls['dropUpLocation'].dirty || userForm.controls['dropUpLocation'].touched)">This
+                            field is required</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Price ($)</label>
+                        <!-- <input type="text" class="form-control" formControlName="pickUpLocation"> -->
+                        <input type="text" class="form-control" formControlName="price">
+
+                        <span class="text-danger"
+                            *ngIf="userForm.controls['price'].hasError('required') && (userForm.controls['price'].dirty || userForm.controls['price'].touched)">This
+                            field is required</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h2>{{td}} Km</h2>
+                    <ul class="list-group selected_location">
+                        <li class="list-group-item" *ngFor="let item of firstdis">{{item.loc}} <button type="button"
+                                (click)="rm(item)" class="btn btn-outline-danger btn-sm"><i
+                                    class="fa fa-minus"></i></button></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <label>Job details send by</label>
+                    <div class="form-group">
+                        <select class="form-control custom-select" formControlName="mailby" id="mailby">
+                            <option value="">No notification</option>
+                            <option value="Email">Email</option>
+                            <option value="Phone">Phone</option>
+                        </select>
+                    </div>
+                    <!-- <span class="text-danger"
+                        *ngIf="userForm.controls['mailby'].hasError('required') && (userForm.controls['mailby'].dirty || userForm.controls['mailby'].touched)">This
+                        field is required</span> -->
+                    <span class="text-danger" *ngIf="mailbyMsg != ''">{{mailbyMsg}}</span>
+                </div>
+
+            </div>
+
+            <!-- <div class="row">
+    <div class="col-md-12">
+    <div formArrayName="midlocation">
+    <div class="container mb-12" *ngFor="let container of midlocation().controls; let i=index"
+    [formGroupName]="i">
+    <div class="row">
+    <div class="col-5">
+    <div class="form-group">
+    <label>Intermideate Location : {{i+1}}</label>
+    
+    <input type="text" class="form-control" formControlName="location"
+    placeholder="Enter pickup location" class="form-control"
+    (keydown.enter)="$event.preventDefault()" autocorrect="off"
+    autocapitalize="off" spellcheck="off" #Location id="{{'location_'+i}}">
+    </div>
+    </div>
+    <div class="col-1" *ngIf="i>=1">
+    <button type="button" (click)="removeContainer(i)"><i
+    class="fa fa-minus-circle"></i></button>
+    </div>
+    <div class="col-1">
+    <button type="button" (click)="addDispatchJob()"><i class="fa fa-plus-circle"
+    aria-hidden="true"></i>
+    </button>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div> -->
+
+
+            <div class="actions clearfix px-0 text-right">
+                <button [disabled]="isDisabled" class="btn waves-effect waves-light btn-outline-primary"
+                    (click)="submitForm()">Submit</button>
+                    &nbsp;
+                    <button [disabled]="isDisabled" class="btn waves-effect waves-light btn-outline-primary"
+                    (click)="reset()">Reset</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>

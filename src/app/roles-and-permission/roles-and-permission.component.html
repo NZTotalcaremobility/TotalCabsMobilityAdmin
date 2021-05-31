@@ -1,0 +1,176 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Permission</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item active">Manage Permission</li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid  relative h-100">
+    <!-- .row -->
+    <div style="position: relative">
+        <div class="row">
+            <!-- .col -->
+            <div class="col-12 text-right">
+                <button class="btn btn-info btn-sm mb-3" (click)="RoletoggleModal=true">Add Sub-admin</button>
+            </div>
+        </div>
+        <div class="row">
+            <!-- .col -->
+            <div class="col-12">
+                <div class="card card-body">
+                    <div class="table-responsive">
+                        <table class="tablesaw table-bordered table-hover table responsivetable"
+                            data-tablesaw-mode="swipe" data-tablesaw-sortable data-tablesaw-sortable-switch
+                            data-tablesaw-minimap data-tablesaw-mode-switch>
+                            <thead>
+                                <tr>
+                                    <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Name
+                                    </th>
+                                    <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col
+                                        data-tablesaw-priority="1">Email</th>
+                                    <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">User Type
+                                    </th>
+                                    <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Status
+                                    </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of userList| paginate: { itemsPerPage: 10, currentPage: page }">
+                                    <td data-title="Driver Name">
+                                        {{item.name.charAt(0)|uppercase}}{{item.name.substr(1)}}
+                                    </td>
+                                    <td data-title="users Name">
+                                        {{item.email}}
+                                    </td>
+                                    <td data-title=" Status">{{item.userType}}</td>
+                                    <td data-title=" Status" class="text-primary">{{item.status?"Active":"De-active"}}
+                                    </td>
+                                    <td data-title="Action">
+                                        <button type="button" class="btn btn-info btn-sm ml-1 mb-1" data-toggle="modal"
+                                            data-target="#exampleModal" (click)="openModal(item)">
+                                            <i class="fa fa-key"> </i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm ml-1 mb-1"
+                                            (click)="deleteUser(item._id)">
+                                            <i class="fa fa-trash"> </i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal" [ngStyle]="{display: toggleModal?'block':'none'}" id="exampleModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Permission</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)='toggleModal= false'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="permissionForm" class="form login w-100 mx-auto">
+                    <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control design-fix" formControlName="permissions"
+                            [placeholder]="'select permissions'" [settings]="dropdownSettings" [data]="permissionList"
+                            [(ngModel)]="permission">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="afterSubmit()">Save changes</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)='toggleModal= false'>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" [ngStyle]="{display: RoletoggleModal?'block':'none'}" id="subadminmodal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="subadminmodalbofy">Add Sub admin User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)='RoletoggleModal= false'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="registeForm" class="form login mx-auto" (submit)="registerSubAdmin()">
+                    <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control design-fix" formControlName="permissions"
+                            [placeholder]="'select permissions'" [settings]="dropdownSettings" [data]="permissionList">
+                        </ng-multiselect-dropdown>
+                        <span class="text-danger"
+                            *ngIf="registeForm.controls['permissions'].hasError('required') && (registeForm.controls['permissions'].dirty || registeForm.controls['permissions'].touched)">This
+                            field is required</span>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- <label for="login__username"><i class="fa fa-user"></i></label> -->
+                        <input type="text" class="form-control" formControlName="name" placeholder="Name">
+                        <span class="text-danger"
+                            *ngIf="registeForm.controls['name'].hasError('required') && (registeForm.controls['name'].dirty || registeForm.controls['name'].touched)">This
+                            field is required</span>
+                        <span class="text-danger"
+                            *ngIf="registeForm.controls['name'].hasError('pattern') && (registeForm.controls['name'].dirty || registeForm.controls['name'].touched)">Please
+                            enter valid name address</span>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" formControlName="email" placeholder="Email">
+                        <span class="text-danger"
+                            *ngIf="registeForm.controls['email'].hasError('required') && (registeForm.controls['email'].dirty || registeForm.controls['email'].touched)">This
+                            field is required</span>
+                        <span class="text-danger"
+                            *ngIf="registeForm.controls['email'].hasError('pattern') && (registeForm.controls['email'].dirty || registeForm.controls['email'].touched)">Please
+                            enter valid email address</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" formControlName="phonenumber" placeholder="Phone Number">
+                        <span class="text-danger"
+                            *ngIf="registeForm.controls['phonenumber'].hasError('required') && (registeForm.controls['phonenumber'].dirty || registeForm.controls['phonenumber'].touched)">This
+                            field is required</span>
+                        <span class="text-danger" *ngIf="registeForm.controls['phonenumber'].hasError('pattern')">This
+                            field is required 10 digits</span>
+                    </div>
+                    <div class="form-group">
+                        <input formControlName="password" type="password" class="form-control" placeholder="Password"
+                            required />
+                        <span class="text-danger"
+                            *ngIf="registeForm.controls['password'].hasError('required') && (registeForm.controls['password'].dirty || registeForm.controls['password'].touched)">This
+                            field is required</span>
+
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" *ngIf="isSubmittng" type="submit" value="Register" disabled />
+                        <input class="btn btn-primary" *ngIf="!isSubmittng" type="submit" value="Register" />
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)='RoletoggleModal= false'>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
